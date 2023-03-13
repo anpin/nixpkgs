@@ -40794,4 +40794,6 @@ with pkgs;
   reindeer = callPackage ../development/tools/reindeer { };
 
   charasay = callPackage ../tools/misc/charasay { };
+
+  pbm = callPackage ../tools/admin/pbm { };
 }
