@@ -25370,6 +25370,8 @@ with pkgs;
 
   cockpit = callPackage ../servers/monitoring/cockpit { };
 
+  codeium = callPackage ../development/tools/codeium { };
+
   codeowners = callPackage ../development/tools/codeowners { };
 
   couchdb3 = callPackage ../servers/http/couchdb/3.nix { };

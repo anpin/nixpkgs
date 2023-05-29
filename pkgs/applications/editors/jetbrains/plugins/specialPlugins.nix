@@ -60,4 +60,11 @@
       fix_offset PRELUDE_POSITION
     '';
   };
+  "20540" = {
+    nativeBuildInputs = [ autoPatchelfHook ];
+    buildInputs = [ stdenv.cc.cc.lib codeium ];
+    # buildPhase = ''
+    #   ln -sf ${pkgs.codeium}/bin/codeium_language_server ${pluginDestinationPath}/language_server_linux_x64"
+    # '';
+  };
 }
