@@ -37,7 +37,7 @@ dotnetInstallHook() {
         local -r projectFile="${1-}"
 
         runtimeIdFlagsArray=()
-        if [[ $projectFile == *.csproj || -n ${dotnetSelfContainedBuild-} ]]; then
+        if  [[ "$projectFile" =~ *.(cs|fs)proj || (-d "$projectFile" && -n "$(find "$projectFile" -maxdepth 1 -type f -name "*.csproj" -o -name "*.fsproj")" ) ]] || -n ${dotnetSelfContainedBuild-}; then
             runtimeIdFlagsArray+=("--runtime" "$dotnetRuntimeId")
         fi
 
