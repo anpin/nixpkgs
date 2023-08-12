@@ -52,7 +52,7 @@ dotnetCheckHook() {
     for projectFile in "${dotnetTestProjectFilesArray[@]-${dotnetProjectFilesArray[@]}}"; do
         for runtimeId in "${dotnetRuntimeIdsArray[@]}"; do
             local runtimeIdFlagsArray=()
-            if [[ $projectFile == *.csproj ]]; then
+            if [[ "$projectFile" =~ *.(cs|fs)proj || (-d "$projectFile" && -n "$(find "$projectFile" -maxdepth 1 -type f -name "*.csproj" -o -name "*.fsproj")" ) ]]; then
                 runtimeIdFlagsArray=("--runtime" "$runtimeId")
             fi
 
