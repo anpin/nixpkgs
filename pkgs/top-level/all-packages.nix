@@ -2579,6 +2579,10 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) Foundation;
   };
 
+  onnxruntime-genai = callPackage ../by-name/on/onnxruntime-genai/package.nix {
+    inherit (darwin.apple_sdk.frameworks) Foundation;
+  };
+
   ockam = callPackage ../tools/networking/ockam {
     inherit (darwin.apple_sdk.frameworks) AppKit Security;
   };
