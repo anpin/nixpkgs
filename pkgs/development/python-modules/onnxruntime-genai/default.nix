@@ -1,15 +1,14 @@
-{
-  lib,
-  stdenv,
-  buildPythonPackage,
-  autoPatchelfHook,
-  pythonRelaxDepsHook,
-  onnxruntime,
-  coloredlogs,
-  numpy,
-  packaging,
-  oneDNN,
-  re2,
+{ lib
+, stdenv
+, buildPythonPackage
+, autoPatchelfHook
+, pythonRelaxDepsHook
+, onnxruntime-genai
+, coloredlogs
+, numpy
+, packaging
+, oneDNN
+, re2
 
 }:
 
@@ -27,16 +26,20 @@
 # the version likely mismatches with what is used here.
 
 buildPythonPackage {
-  inherit (onnxruntime) pname version;
+  inherit (onnxruntime-genai) pname version;
   format = "wheel";
-  src = onnxruntime.dist;
+  src = onnxruntime-genai.dist;
 
   unpackPhase = ''
     cp -r $src dist
     chmod +w dist
   '';
 
-  nativeBuildInputs = [ pythonRelaxDepsHook ] ++ lib.optionals stdenv.isLinux [ autoPatchelfHook ];
+  nativeBuildInputs = [
+    pythonRelaxDepsHook
+  ] ++ lib.optionals stdenv.isLinux [
+    autoPatchelfHook
+  ];
 
   # This project requires fairly large dependencies such as sympy which we really don't always need.
   pythonRemoveDeps = [
@@ -49,14 +52,14 @@ buildPythonPackage {
   buildInputs = [
     oneDNN
     re2
-    onnxruntime.protobuf
-  ] ++ lib.optionals onnxruntime.passthru.cudaSupport (with onnxruntime.passthru.cudaPackages; [
+    onnxruntime-genai.protobuf
+    onnxruntime-genai.onnxruntime
+  ] ++ lib.optionals onnxruntime-genai.passthru.cudaSupport (with onnxruntime-genai.passthru.cudaPackages; [
     libcublas # libcublasLt.so.XX libcublas.so.XX
     libcurand # libcurand.so.XX
     libcufft # libcufft.so.XX
     cudnn # libcudnn.soXX
     cuda_cudart # libcudart.so.XX
-    nccl #libnccl.so.2
   ]);
 
   propagatedBuildInputs = [
@@ -68,5 +71,5 @@ buildPythonPackage {
     # sympy
   ];
 
-  meta = onnxruntime.meta;
+  meta = onnxruntime-genai.meta;
 }
