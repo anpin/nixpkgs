@@ -199,6 +199,7 @@ effectiveStdenv.mkDerivation rec {
     "-Donnxruntime_USE_FULL_PROTOBUF=OFF"
     (lib.cmakeBool "onnxruntime_USE_CUDA" cudaSupport)
     (lib.cmakeBool "onnxruntime_USE_NCCL" cudaSupport)
+    # (lib.cmakeBool "onnxruntime_DISABLE_CONTRIB_OPS" cudaSupport)
   ] ++ lib.optionals pythonSupport [
     "-Donnxruntime_ENABLE_PYTHON=ON"
   ] ++ lib.optionals cudaSupport [
