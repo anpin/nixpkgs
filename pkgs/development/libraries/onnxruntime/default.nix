@@ -187,7 +187,7 @@ effectiveStdenv.mkDerivation rec {
     "-D_SILENCE_ALL_CXX23_DEPRECATION_WARNINGS=1"
     (lib.cmakeBool "onnxruntime_USE_CUDA" cudaSupport)
     (lib.cmakeBool "onnxruntime_USE_NCCL" cudaSupport)
-    (lib.cmakeBool "onnxruntime_DISABLE_CONTRIB_OPS" cudaSupport)
+    # (lib.cmakeBool "onnxruntime_DISABLE_CONTRIB_OPS" cudaSupport)
   ] ++ lib.optionals pythonSupport [
     "-Donnxruntime_ENABLE_PYTHON=ON"
   ] ++ lib.optionals cudaSupport [
