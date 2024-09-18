@@ -9,6 +9,8 @@
 , coreutils
 , autoPatchelfHook
 , zlib
+, systemdLibs
+, zstd
 }:
 with lib;
 let
@@ -45,7 +47,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ makeWrapper ]
     ++ lib.optional (!stdenv.hostPlatform.isDarwin) autoPatchelfHook;
 
-  buildInputs = [ jre_headless util-linux zlib ];
+  buildInputs = [ jre_headless util-linux zlib systemdLibs zstd ];
 
   runtimeDependencies = [ zlib jre_headless ];
 
@@ -61,7 +63,8 @@ stdenv.mkDerivation rec {
     wrapProgram $out/bin/elasticsearch \
       --prefix PATH : "${makeBinPath [ util-linux coreutils gnugrep ]}" \
       --set ES_JAVA_HOME "${jre_headless}" \
-      --set SCRIPT_NAME "$out/bin/elasticsearch"
+      --set SCRIPT_NAME "$out/bin/elasticsearch" \
+      --prefix ES_JAVA_OPTS : '-Djava.library.path="${lib.makeLibraryPath buildInputs}:$out/lib"'
 
     esbin=$out/bin/elasticsearch
 
