@@ -68,8 +68,9 @@ stdenv.mkDerivation rec {
 
     esbin=$out/bin/elasticsearch
 
-    for file in $esbin-plugin $esbin-shard $esbin-node $esbin-reset-password; do
-      wrapProgram $file --set ES_JAVA_HOME "${jre_headless}" \
+    for file in $esbin-plugin $esbin-shard $esbin-node $esbin-reset-password $esbin-users $esbin-syskeygen $esbin-service-tokens $esbin-keystore $esbin-setup-passwords; do
+      wrapProgram $file \
+        --set ES_JAVA_HOME "${jre_headless}" \
         --set SCRIPT_NAME "$file"
     done
   '';
