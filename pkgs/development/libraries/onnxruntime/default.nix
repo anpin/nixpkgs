@@ -245,6 +245,7 @@ effectiveStdenv.mkDerivation rec {
   passthru = {
     inherit cudaSupport cudaPackages; # for the python module
     protobuf = protobuf_21;
+    cutlass = cutlass;
     tests = lib.optionalAttrs pythonSupport {
       python = python3Packages.onnxruntime;
     };

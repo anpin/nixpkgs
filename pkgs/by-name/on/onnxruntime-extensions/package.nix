@@ -208,6 +208,7 @@ effectiveStdenv.mkDerivation rec {
   ]
   ++ lib.optionals cudaSupport [
     "-DOCOS_USE_CUDA=ON"
+    (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_CUTLASS" "${onnxruntime.cutlass}")
     (lib.cmakeFeature "onnxruntime_CUDNN_HOME" "${cudaPackages.cudnn}")
     (lib.cmakeFeature "CMAKE_CUDA_ARCHITECTURES" cudaArchitecturesString)
     (lib.cmakeFeature "onnxruntime_NVCC_THREADS" "1")
