@@ -115,7 +115,7 @@ effectiveStdenv.mkDerivation rec {
   pname = "onnxruntime-extensions";
   inherit version src;
 
-
+  patchFlags = [ "-p1" "--binary" "-l" ]; # patch has dos style eol
   patches = [
     ./0001-patch-dependencies.patch
     ./0002-patch-dependencies.patch
