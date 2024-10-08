@@ -194,9 +194,10 @@ mkCommon type rec {
         let
           majorVersion = lib.concatStringsSep "." (lib.take 2 (lib.splitVersion version));
         in
+        # We need to use toString so it runs the script in the local repo. The
+        # script uses BASH_SOURCE to find its output.
         writeShellScript "update-dotnet-${majorVersion}" ''
-          pushd pkgs/development/compilers/dotnet
-          exec ${./update.sh} "${majorVersion}"
+          exec ${lib.escapeShellArg (toString ./update.sh)} "${majorVersion}"
         '';
     };
 
