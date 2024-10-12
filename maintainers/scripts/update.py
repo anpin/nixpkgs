@@ -12,6 +12,7 @@ import tempfile
 
 class CalledProcessError(Exception):
     process: asyncio.subprocess.Process
+    stderr: bytes
 
 class UpdateFailedException(Exception):
     pass
@@ -24,15 +25,17 @@ async def check_subprocess(*args, **kwargs):
     Emulate check argument of subprocess.run function.
     """
     process = await asyncio.create_subprocess_exec(*args, **kwargs)
+    stdout, stderr = await process.communicate()
     returncode = await process.wait()
 
     if returncode != 0:
         error = CalledProcessError()
         error.process = process
+        error.stderr = stderr
 
         raise error
 
-    return process
+    return stdout
 
 async def run_update_script(nixpkgs_root: str, merge_lock: asyncio.Lock, temp_dir: Optional[Tuple[str, str]], package: Dict, keep_going: bool):
     worktree: Optional[str] = None
@@ -52,7 +55,7 @@ async def run_update_script(nixpkgs_root: str, merge_lock: asyncio.Lock, temp_di
     eprint(f" - {package['name']}: UPDATING ...")
 
     try:
-        update_process = await check_subprocess(
+        update_info = await check_subprocess(
             'env',
             f"UPDATE_NIX_NAME={package['name']}",
             f"UPDATE_NIX_PNAME={package['pname']}",
@@ -63,7 +66,6 @@ async def run_update_script(nixpkgs_root: str, merge_lock: asyncio.Lock, temp_di
             stderr=asyncio.subprocess.PIPE,
             cwd=worktree,
         )
-        update_info = await update_process.stdout.read()
 
         await merge_changes(merge_lock, package, update_info, temp_dir)
     except KeyboardInterrupt as e:
@@ -74,10 +76,9 @@ async def run_update_script(nixpkgs_root: str, merge_lock: asyncio.Lock, temp_di
         eprint()
         eprint(f"--- SHOWING ERROR LOG FOR {package['name']} ----------------------")
         eprint()
-        stderr = await e.process.stderr.read()
-        eprint(stderr.decode('utf-8'))
+        eprint(e.stderr.decode('utf-8'))
         with open(f"{package['pname']}.log", 'wb') as logfile:
-            logfile.write(stderr)
+            logfile.write(e.stderr)
         eprint()
         eprint(f"--- SHOWING ERROR LOG FOR {package['name']} ----------------------")
 
@@ -129,12 +130,12 @@ async def check_changes(package: Dict, worktree: str, update_info: str):
 
         if 'newVersion' not in changes[0]:
             attr_path = changes[0]['attrPath']
-            obtain_new_version_process = await check_subprocess('nix-instantiate', '--expr', f'with import ./. {{}}; lib.getVersion {attr_path}', '--eval', '--strict', '--json', stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, cwd=worktree)
-            changes[0]['newVersion'] = json.loads((await obtain_new_version_process.stdout.read()).decode('utf-8'))
+            obtain_new_version_output = await check_subprocess('nix-instantiate', '--expr', f'with import ./. {{}}; lib.getVersion {attr_path}', '--eval', '--strict', '--json', stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, cwd=worktree)
+            changes[0]['newVersion'] = json.loads(obtain_new_version_output.decode('utf-8'))
 
         if 'files' not in changes[0]:
-            changed_files_process = await check_subprocess('git', 'diff', '--name-only', 'HEAD', stdout=asyncio.subprocess.PIPE, cwd=worktree)
-            changed_files = (await changed_files_process.stdout.read()).splitlines()
+            changed_files_output = await check_subprocess('git', 'diff', '--name-only', 'HEAD', stdout=asyncio.subprocess.PIPE, cwd=worktree)
+            changed_files = changed_files_output.splitlines()
             changes[0]['files'] = changed_files
 
             if len(changed_files) == 0:
@@ -176,8 +177,8 @@ async def start_updates(max_workers: int, keep_going: bool, commit: bool, packag
         # Do not create more workers than there are packages.
         num_workers = min(max_workers, len(packages))
 
-        nixpkgs_root_process = await check_subprocess('git', 'rev-parse', '--show-toplevel', stdout=asyncio.subprocess.PIPE)
-        nixpkgs_root = (await nixpkgs_root_process.stdout.read()).decode('utf-8').strip()
+        nixpkgs_root_output = await check_subprocess('git', 'rev-parse', '--show-toplevel', stdout=asyncio.subprocess.PIPE)
+        nixpkgs_root = nixpkgs_root_output.decode('utf-8').strip()
 
         # Set up temporary directories when using auto-commit.
         for i in range(num_workers):
