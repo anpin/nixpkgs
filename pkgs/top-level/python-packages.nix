@@ -1147,6 +1147,8 @@ self: super: with self; {
 
   azure-identity = callPackage ../development/python-modules/azure-identity { };
 
+  azure-iot-device = callPackage ../development/python-modules/azure-iot-device { };
+
   azure-keyvault = callPackage ../development/python-modules/azure-keyvault { };
 
   azure-keyvault-administration = callPackage ../development/python-modules/azure-keyvault-administration { };
@@ -1411,6 +1413,8 @@ self: super: with self; {
   pulumi-azure-native = pkgs.pulumiPackages.pulumi-azure-native.sdks.python;
 
   pulumi-command = pkgs.pulumiPackages.pulumi-command.sdks.python;
+
+  pulumi-hcloud = callPackage ../development/python-modules/pulumi-hcloud { };
 
   pulumi-random = pkgs.pulumiPackages.pulumi-random.sdks.python;
 
@@ -3033,6 +3037,8 @@ self: super: with self; {
   deepdiff = callPackage ../development/python-modules/deepdiff { };
 
   deepdish = callPackage ../development/python-modules/deepdish { };
+
+  deepface = callPackage ../development/python-modules/deepface { };
 
   deepl = callPackage ../development/python-modules/deepl { };
 
@@ -8248,6 +8254,8 @@ self: super: with self; {
 
   msrest = callPackage ../development/python-modules/msrest { };
 
+  mtcnn = callPackage ../development/python-modules/mtcnn { };
+
   mt-940 = callPackage ../development/python-modules/mt-940 { };
 
   mullvad-api = callPackage ../development/python-modules/mullvad-api { };
@@ -9399,6 +9407,8 @@ self: super: with self; {
   opentelemetry-instrumentation-grpc = callPackage ../development/python-modules/opentelemetry-instrumentation-grpc { };
 
   opentelemetry-instrumentation-psycopg2 = callPackage ../development/python-modules/opentelemetry-instrumentation-psycopg2 { };
+
+  opentelemetry-instrumentation-requests = callPackage ../development/python-modules/opentelemetry-instrumentation-requests { };
 
   opentelemetry-instrumentation-wsgi = callPackage ../development/python-modules/opentelemetry-instrumentation-wsgi { };
 
@@ -13600,6 +13610,8 @@ self: super: with self; {
 
   requests-unixsocket = callPackage ../development/python-modules/requests-unixsocket { };
 
+  requests-unixsocket2 = callPackage ../development/python-modules/requests-unixsocket2 { };
+
   requests-wsgi-adapter = callPackage ../development/python-modules/requests-wsgi-adapter { };
 
   requirements-detector = callPackage ../development/python-modules/requirements-detector { };
@@ -13633,6 +13645,8 @@ self: super: with self; {
   result = callPackage ../development/python-modules/result { };
 
   rethinkdb = callPackage ../development/python-modules/rethinkdb { };
+
+  retinaface = callPackage ../development/python-modules/retinaface { };
 
   retry = callPackage ../development/python-modules/retry { };
 

@@ -905,6 +905,18 @@
     githubId = 217050;
     name = "Albert Chae";
   };
+  albertodvp = {
+    email = "alberto.fanton@protonmail.com";
+    github = "albertodvp";
+    githubId = 16022854;
+    matrix = "@albertodvp:matrix.org";
+    name = "Alberto Fanton";
+    keys = [
+      {
+        fingerprint = "63FD 3A4F 4832 946C B808  8E3C C852 4052 69E7 A087";
+      }
+    ];
+  };
   aldoborrero = {
     email = "aldoborrero+nixos@pm.me";
     github = "aldoborrero";
@@ -13910,6 +13922,13 @@
     githubId = 3490861;
     name = "Mark Vainomaa";
     keys = [ { fingerprint = "DB43 2895 CF68 F0CE D4B7  EF60 DA01 5B05 B5A1 1B22"; } ];
+  };
+  mikut = {
+    email = "mikut@mikut.dev";
+    github = "Mikutut";
+    githubId = 65046942;
+    name = "Marcin Mikuła";
+    keys = [ { fingerprint = "5547 2A56 AC30 69C9 15C8  B98D 997F 71FA 1D74 6E37"; } ];
   };
   milahu = {
     email = "milahu@gmail.com";

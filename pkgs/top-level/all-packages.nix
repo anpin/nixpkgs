@@ -6085,10 +6085,6 @@ with pkgs;
     inherit (darwin.apple_sdk.frameworks) CoreFoundation IOKit Kerberos;
   };
 
-  bacon = callPackage ../development/tools/bacon {
-    inherit (darwin.apple_sdk.frameworks) CoreServices;
-  };
-
   bats = callPackage ../development/interpreters/bats { };
 
   bbe = callPackage ../tools/misc/bbe { };
@@ -8462,7 +8458,9 @@ with pkgs;
 
   heimdall-gui = heimdall.override { enableGUI = true; };
 
-  headscale = callPackage ../servers/headscale { };
+  headscale = callPackage ../servers/headscale {
+    buildGoModule = buildGo123Module;
+  };
 
   health = callPackage ../applications/misc/health { };
 
@@ -33548,7 +33546,7 @@ with pkgs;
 
   webcamoid = libsForQt5.callPackage ../applications/video/webcamoid { };
 
-  webcord = callPackage ../by-name/we/webcord/package.nix { electron = electron_30; };
+  webcord = callPackage ../by-name/we/webcord/package.nix { electron = electron_32; };
 
   webcord-vencord = callPackage ../by-name/we/webcord-vencord/package.nix { electron = electron_30; };
 
