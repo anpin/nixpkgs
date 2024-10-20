@@ -430,6 +430,15 @@
       },
       "name": "aws-toolkit"
     },
+    "12056": {
+      "compatible": [
+        "rider"
+      ],
+      "builds": {
+        "242.22855.90": "https://plugins.jetbrains.com/files/12056/600337/rider-android-242.21829.210.zip"
+      },
+      "name": "rider-android-support"
+    },
     "12062": {
       "compatible": [
         "clion",
@@ -706,6 +715,7 @@
     "https://plugins.jetbrains.com/files/10037/614791/intellij-csv-validator-4.0.0.zip": "sha256-DuztEfLOmwSWrWk+Q9rWYn/BzHrkx2giKTTpIbZdAOQ=",
     "https://plugins.jetbrains.com/files/11349/620637/aws-toolkit-jetbrains-standalone-3.33-241.zip": "sha256-JPDOMqyqhvS/RE+NjYr9NtgoBWzR/lRGzBH2DI2jAx4=",
     "https://plugins.jetbrains.com/files/11349/620639/aws-toolkit-jetbrains-standalone-3.33-242.zip": "sha256-dGUsNEkOZyBh6WaDzx4A8uDgaABs032eIHu/hCwrk5k=",
+    "https://plugins.jetbrains.com/files/12056/600337/rider-android-242.21829.210.zip": "sha256-8FrGTpw7c9+Za2EEEGNtfA4NID666Iws3ZBUCC6Y4xo=",
     "https://plugins.jetbrains.com/files/12062/508223/keymap-vscode-241.14494.150.zip": "sha256-LeQ5vi9PCJYmWNmT/sutWjSlwZaAYYuEljVJBYG2VpY=",
     "https://plugins.jetbrains.com/files/12062/586741/keymap-vscode-242.20224.385.zip": "sha256-LpooujwYaX339yZJVe7HPYIOw+YdJLeEtRgwPxLJ9eI=",
     "https://plugins.jetbrains.com/files/12559/508216/keymap-eclipse-241.14494.150.zip": "sha256-/hEx0gIFvUXD799tRmMHAt9Z5ziFgaQs1RX0zQwTJIA=",
