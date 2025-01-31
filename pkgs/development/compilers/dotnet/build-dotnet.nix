@@ -160,6 +160,15 @@ mkWrapper type (
       mkdir -p $out/bin
       ln -s $out/share/dotnet/dotnet $out/bin/dotnet
 
+      for i in $out/share/dotnet/sdk/*; do
+           i=$(basename $i)
+           length=$(printf "%s" "$i" | wc -c)
+           substring=$(printf "%s" "$i" | cut -c 1-$(expr $length - 2))
+           i="$substring""00"
+           mkdir -p $out/share/dotnet/metadata/workloads/''${i/-*}
+           touch $out/share/dotnet/metadata/workloads/''${i/-*}/userlocal
+      done
+
       runHook postInstall
     '';
 
